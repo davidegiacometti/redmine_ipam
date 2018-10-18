@@ -1,0 +1,55 @@
+<div class="contextual">
+  <%= link_to l(:network_scan), {controller: 'networks', action: 'scan', id: @network.id}, :class => 'icon icon-reload' %>
+</div>
+
+<h2><%= [@network.ip_address, @network.mask].join '/' %></h2>
+
+<%= form_tag({action: 'show', id: @network.id}, :method => :get) do %>
+<fieldset><legend><%= l(:label_filter_plural) %></legend>
+<label for='ip_address'><%= l(:ip_address) %>:</label>
+<%= text_field_tag 'ip_address', params[:ip_address] %>
+<label for='status'><%= l(:field_status) %>:</label>
+<%= select_tag 'status', options_for_select([[l(:used), 1], [l(:free), 0]], :selected => params[:status]), :include_blank => true, :class => "small", :onchange => "this.form.submit(); return false;"  %>
+<%= submit_tag l(:button_apply), :class => 'small', :name => nil %>
+<%= link_to l(:button_clear), {action: 'show', id: @network.id}, :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+&nbsp;
+
+<div class="autoscroll">
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= l(:ip_address) %></th>
+      <th><%= l(:hostname) %></th>
+      <th><%= l(:description) %></th>
+      <th><%= l(:status) %></th>
+      <th><%= l(:last_scan) %></th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @hosts.each do |host| %>
+    <tr id="<%= host.id %>" class="<%= cycle('odd', 'even') %>">
+      <td class="ip-address"><%= host.ip_address %></td>
+      <td class="hostname"><%= host.hostname %></td>
+      <td class="description"><%= host.description %></td>
+      <% if host.status == 1 %>
+      <td class="status"><span class="icon icon-ok"></span></td>
+      <% else %>
+      <td class="status"></td>
+      <% end %>
+      <td class="last-scan"><%= format_time(host.last_scan.localtime) rescue '' %></td>
+      <td>
+        <%= link_to l(:scan), {controller: 'hosts', action: 'scan', id: host.id}, class: 'scan icon icon-reload', remote: true %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<span class="pagination"><%= pagination_links_full @host_pages, @host_count %></span>
+
+<% content_for :sidebar do %>
+    <%= render :partial => 'networks/sidebar' %>
+<% end %>

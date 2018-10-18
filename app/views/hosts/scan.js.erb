@@ -1,0 +1,10 @@
+<% if @host.status == 1 %>
+<% status = '<span class="icon icon-ok"></span>' %>
+<% elsif @host.status == 0 %>
+<% status = '<span class="icon icon-not-ok"></span>' %>
+<% else %>
+<% status = '&nbsp;' %>
+<% end %>
+$('#<%= @host.id %>').find('td.hostname').html('<%= @host.hostname %>');
+$('#<%= @host.id %>').find('td.last-scan').html('<%= format_time(@host.last_scan.localtime) %>');
+$('#<%= @host.id %>').find('td.status').html('<%= status.html_safe %>');

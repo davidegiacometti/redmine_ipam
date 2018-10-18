@@ -1,0 +1,5 @@
+<h2><%= l(:edit_network) %></h2>
+<%= form_for @network, :url => {:action => :update} do |f| %>
+<%= render partial: 'form', locals: { f: f } %>
+<%= f.submit l(:update) %>
+<% end %>

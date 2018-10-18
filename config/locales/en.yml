@@ -1,0 +1,21 @@
+# English strings go here for Rails i18n
+en:
+  network: Network
+  networks: Networks
+  network_new: New network
+  network_edit: Edit
+  network_scan: Scan network
+  network_destroy: Delete
+  ip_address: IP address
+  mask: Mask
+  description: Description
+  last_scan: Last scan
+  status: Status
+  unknown: Unknown
+  used: Used
+  free: Free
+  scan: Scan
+  usage: Usage
+  hostname: Hostname
+  scan_requested: Scan started
+  are_you_sure: Are you sure?

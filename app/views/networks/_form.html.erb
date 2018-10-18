@@ -1,0 +1,6 @@
+<%= error_messages_for 'network' %>
+<div class="box tabular">
+  <p><%= label(:network, :ip_address, l(:ip_address)) %><%= f.text_field :ip_address, required: true %></p>
+  <p><%= label(:network, :mask, l(:mask)) %><%= f.text_field :mask, required: true %></p>
+  <p><%= label(:network, :description, l(:description)) %><%= f.text_area :description, cols: 100 %></p>
+</div>

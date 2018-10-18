@@ -1,0 +1,10 @@
+<h3>Network summary</h3>
+<%= javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js', 'chartkick' %>
+<% if @network %>
+  <% data = @network.hosts.group(:status).count %>
+  <% data[l(:free)] = data.delete(0) %>
+  <% data[l(:used)] = data.delete(1) %>
+  <% data[l(:unknown)] = data.delete(nil) %>
+  <% Rails.logger.debug data.inspect %>
+  <%= pie_chart data, :donut => true, colors: ['green', 'red', 'grey'], library: {backgroundColor: 'transparent', chartArea: {width:'100%'}, legend: {position: 'bottom', fullWidth: true}} %>
+<% end %>

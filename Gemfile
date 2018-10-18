@@ -1,0 +1,5 @@
+gem 'ipaddress', '0.8.3'
+gem 'net-ping', '2.0.4'
+gem 'responders', '2.4.0'
+gem 'sucker_punch', '2.0.4'
+gem 'chartkick'

@@ -1,0 +1,40 @@
+<%= form_tag(:networks, :method => :get) do %>
+<fieldset><legend><%= l(:label_filter_plural) %></legend>
+<label for='ip_address'><%= l(:ip_address) %>:</label>
+<%= text_field_tag 'ip_address', params[:ip_address] %>
+<%= submit_tag l(:button_apply), :class => 'small', :name => nil %>
+<%= link_to l(:button_clear), :networks, :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+&nbsp;
+
+<div class="contextual">
+  <%= link_to l(:network_new), :new_network, class: 'icon icon-add' %>
+</div>
+<h2><%= l(:networks) %></h2>
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= l(:network) %></th>
+      <th><%= l(:usage) %></th>
+      <th><%= l(:description) %></th>
+      <th><%= l(:last_scan) %></th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @networks.each do |network| %>
+    <tr class="<%= cycle('odd', 'even') %>">
+      <td><%= link_to ([network.ip_address, network.mask].join '/'), { action: 'show', id: network.id } %></td>
+      <td><%= [network.hosts.where(:status => 1).count, network.hosts.count].join('/') %></td>
+      <td><%= network.description %></td>
+      <td><%= format_time(network.last_scan.localtime) rescue '' %></td>
+      <td>
+        <%= link_to l(:scan), { action: 'scan', id: network.id }, class: 'icon icon-reload' %>
+        <%= link_to l(:network_edit), { action: 'edit', id: network.id }, class: 'icon icon-edit' %>
+        <%= link_to l(:network_destroy), { action: 'destroy', id: network.id }, method: :delete, data: { confirm: l(:are_you_sure) }, class: 'icon icon-del' %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
